@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 64 64" role="img" aria-labelledby="title-teach">
+  <title id="title-teach">Icona insegnamento</title>
+  <rect width="64" height="64" rx="10" fill="#f6f9fb"/>
+  <g transform="translate(12,12)" fill="#0b2540">
+    <path d="M0 28 L20 18 40 28 20 38z" fill="#0b2540" opacity="0.12"/>
+    <path d="M2 26 L20 14 38 26 20 38z" fill="none" stroke="#0b2540" stroke-width="2"/>
+    <rect x="8" y="40" width="24" height="4" rx="1" fill="#0b2540"/>
+  </g>
+</svg>

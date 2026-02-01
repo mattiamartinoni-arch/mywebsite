@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mattia Martinoni — Informatico di gestione e specialista della didattica: insegno informatica, calcolo, burotica e altro.">
+    <title>Mattia Martinoni — Informatico di gestione</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            /* Nuova palette tipografica */
+            --bg:#fbfdff; --surface:#ffffff; --muted:#4f5b61;
+            --primary:#0b2540; /* colore principale (profondo, autorevole) */
+            --secondary:#f2b705; /* colore complementare (caldo, accento) */
+            --accent:var(--primary); --accent-2:var(--secondary); --glass:rgba(255,255,255,0.6);
+
+            /* Tipografia */
+            --fz-sm:14px; --fz-base:16px; --fz-lg:18px; --fz-xl:30px; --measure:64ch;
+            --para-fz:16px; --para-lh:1.75; --lead-lh:1.6;
+            --radius:12px; --max-width:1100px; --shadow: 0 8px 26px rgba(11,20,30,0.06);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        /* Unified background for consistency across devices */
+        body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;font-size:var(--fz-base);line-height:1.65;margin:0;color:#0f1724;background:var(--bg)} 
+        .container{max-width:var(--max-width);margin:0 auto;padding:1rem}
+
+        /* Heading styles */
+        h1,h2,h3,h4{font-family:Poppins, Inter, system-ui;line-height:1.15;margin:0 0 .5rem}
+        h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:700;color:var(--primary);letter-spacing:-0.4px;margin-bottom:.6rem}
+        h2{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:600;color:#0b2e45;margin-bottom:.5rem}
+        h3{font-size:1.05rem;margin-bottom:.45rem}
+        h4{font-size:1rem;margin-bottom:.4rem}
+        p{font-size:var(--para-fz);line-height:var(--para-lh);color:#12232b;margin:0 0 1rem;max-width:var(--measure)}
+        p.lead{font-size:var(--fz-lg);color:#0d2634;max-width:var(--measure);line-height:var(--lead-lh);margin-bottom:1rem}
+
+        /* Header */
+        header{position:sticky;top:0;background:rgba(255,255,255,0.85);backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid rgba(16,24,40,0.04);z-index:10}
+        .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+        .brand{display:flex;align-items:center;gap:.8rem;text-decoration:none;color:inherit}
+        .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;box-shadow:var(--shadow);font-family:Poppins}
+        .brand-text{display:flex;flex-direction:column}
+        .brand-text .role{font-size:.9rem;color:var(--muted);font-weight:600}
+        .nav{display:flex;gap:1rem;align-items:center}
+        .nav a{color:var(--muted);text-decoration:none;padding:.5rem .6rem;border-radius:8px;transition:all .18s ease}
+        .nav a:hover{color:var(--primary);background:rgba(18,62,102,0.06)}
+        .nav-cta{background:transparent;color:var(--primary);padding:.5rem .7rem;border-radius:8px;border:1px solid rgba(11,37,64,0.09);font-weight:600}
+        .nav-cta:hover{transform:scale(1.02);background:rgba(11,37,64,0.06)}
+
+        /* Hamburger (mobile) */
+        .hamburger{display:none;background:transparent;border:0;padding:.3rem;border-radius:8px;cursor:pointer}
+        .hamburger .hamburger-box{display:inline-block;width:28px;height:20px;position:relative}
+        .hamburger .hamburger-inner, .hamburger .hamburger-inner::before, .hamburger .hamburger-inner::after{width:28px;height:2px;background:var(--primary);position:absolute;left:0;transition:transform .22s ease,opacity .22s ease}
+        .hamburger .hamburger-inner{top:50%;transform:translateY(-50%)}
+        .hamburger .hamburger-inner::before{content:'';top:-8px}
+        .hamburger .hamburger-inner::after{content:'';top:8px}
+        .hamburger.is-active .hamburger-inner{background:transparent}
+        .hamburger.is-active .hamburger-inner::before{transform:translateY(8px) rotate(45deg)}
+        .hamburger.is-active .hamburger-inner::after{transform:translateY(-8px) rotate(-45deg)}
+        @media(max-width:780px){
+            .hamburger{display:inline-flex;align-items:center}
+            .nav{display:none}
+            .nav.nav--open{display:flex;flex-direction:column;width:100%;gap:.6rem;padding:.6rem 0}
+            .nav.nav--open a{display:block;width:100%;padding:.6rem .6rem;background:rgba(11,37,64,0.02);border-radius:8px}
+        }
+
+        /* Hero */
+        .hero{padding:3.25rem 1rem}
+        .hero-inner{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:center}
+        /* Responsive hero: two-column layout on wider screens and compact layout on mobile */
+        @media(min-width:900px){
+            .hero-inner{grid-template-columns:1fr 360px;gap:2rem;align-items:start}
+            .hero{padding:4rem 1rem}
+            .profile-card{padding:1.5rem}
+            .avatar-img{width:140px;height:140px;border-radius:16px}
+        }
+        @media(max-width:520px){
+            .hero{padding:2rem 0.75rem}
+            p.lead{font-size:16px}
+            .hero-ctas{flex-direction:column;gap:.6rem}
+            .hero-ctas .cta,.hero-ctas .secondary{width:100%}
+            .avatar-img{width:72px;height:72px}
+            .price-amount{font-size:1.25rem}
+            .price-desc{font-size:.95rem}
+            .price-features{font-size:.95rem}
+            .price-card{padding:1rem}
+        }
+        .eyebrow{font-size:var(--fz-sm);color:var(--muted);margin:.4rem 0 0;font-weight:600;text-transform:uppercase;letter-spacing:1px} 
+        .muted{color:var(--muted);margin:0}
+        .hero-ctas{margin-top:1rem;display:flex;gap:.8rem;flex-wrap:wrap}
+
+        /* Buttons */
+        .cta{display:inline-block;background:transparent;color:var(--primary);padding:.72rem 1.05rem;border-radius:10px;text-decoration:none;border:1px solid rgba(11,37,64,0.09);transition:transform .15s ease,box-shadow .15s ease;font-weight:700}
+        .cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(11,20,30,0.06);background:rgba(11,37,64,0.06)}
+        .secondary{display:inline-flex;align-items:center;padding:.55rem .85rem;border-radius:10px;background:transparent;border:1px solid rgba(12,34,50,0.06);color:var(--primary);text-decoration:none}
+        .icon-btn{color:var(--primary)}
+
+        /* Profile */
+        .profile-card{background:linear-gradient(180deg,rgba(255,255,255,0.95),var(--surface));padding:1rem;border-radius:14px;box-shadow:var(--shadow);display:flex;gap:1rem;align-items:center}
+        .hero-illustration{width:100%;max-width:320px;border-radius:12px;display:block;margin-bottom:.8rem}
+        .card-illustration{width:56px;height:56px;margin-bottom:.6rem;display:block}
+        .section-illu{width:84px;display:block;margin-bottom:.8rem}
+        @media(min-width:900px){.hero-illustration{max-width:420px}}
+        .avatar-img{width:88px;height:88px;border-radius:14px;object-fit:cover;border:3px solid rgba(255,255,255,0.8);box-shadow:var(--shadow)}
+        .profile-info .name{font-weight:700;margin:0}
+        .profile-info .job{color:var(--muted);margin:0;font-size:.95rem}
+        .profile-info .tag{margin-top:.4rem;color:var(--secondary);font-size:.85rem}
+
+        /* Content */
+        section{padding:2.5rem 1rem}
+        .section-title{display:flex;align-items:center;gap:.75rem;margin-bottom:1.1rem}
+        .section-title h2{margin:0;font-size:clamp(1.25rem,2.2vw,1.6rem);letter-spacing:-0.2px}
+        .section-title::before{content:'';width:40px;height:3px;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:4px;display:inline-block}
+
+        .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+        .card{background:var(--surface);border-radius:12px;padding:1.25rem;border:1px solid rgba(16,24,40,0.04);box-shadow:0 8px 24px rgba(11,20,30,0.03);transition:transform .16s ease,box-shadow .16s ease;display:flex;flex-direction:column;gap:.6rem}
+        /* Pricing styles */
+        .pricing-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:1rem}
+        .price-card{background:linear-gradient(180deg,rgba(255,255,255,0.98),var(--surface));border-radius:12px;padding:1.25rem;border:1px solid rgba(16,24,40,0.06);box-shadow:0 12px 30px rgba(11,20,30,0.04);display:flex;flex-direction:column;gap:.8rem;align-items:flex-start}
+        .price-card--pack{background:linear-gradient(180deg,rgba(250,248,243,1),var(--surface))}
+        .badge{font-size:.85rem;font-weight:700;color:var(--primary);background:rgba(242,183,5,0.12);padding:.3rem .6rem;border-radius:999px}
+        .badge--save{background:linear-gradient(90deg,var(--secondary),#f0c94f);color:#0b2540}
+        .badge--tip{background:rgba(11,37,64,0.06);color:var(--primary);padding:.3rem .6rem;border-radius:999px;font-weight:700} 
+        .price-amount{font-size:1.6rem;font-weight:800;color:var(--primary)}
+        .price-amount .per{font-size:.85rem;font-weight:600;color:var(--muted);margin-left:.35rem}
+        .price-desc{color:#103042;margin:0;line-height:1.6;font-size:.98rem}
+        .price-features{margin:0;padding-left:1.2rem;color:#12232b;line-height:1.6;font-size:.97rem;margin-top:.4rem}
+        .price-cta{margin-top:auto;align-self:stretch;text-align:center}
+        @media(min-width:780px){.price-card{min-height:220px}}
+        .card--feature{display:flex;gap:1rem;align-items:flex-start}
+        .card--feature .icon-circle{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;box-shadow:var(--shadow)}
+        .card .lead{margin:0;color:#102031;font-weight:600}
+        .card ul{margin:0;padding-left:1.2rem;color:#12232b}
+        /* Course note (badge) */
+        .course-note{display:inline-block;color:var(--muted);font-size:.95rem;margin-top:.35rem}
+        .course-note::before{content:'🎓';display:inline-block;margin-right:.45rem;font-size:1rem;line-height:1;color:var(--secondary);transform:translateY(-1px);transition:transform .18s ease}
+
+        /* Courses grid */
+        .courses-grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:1rem}
+        .course-card{background:var(--surface);border-radius:12px;padding:1.1rem;border:1px solid rgba(16,24,40,0.04);box-shadow:0 8px 20px rgba(11,20,30,0.03);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+        .course-card h4{margin:0 0 .35rem;font-size:1.02rem;color:var(--primary);font-weight:700}
+        .course-card .course-desc{margin:0;color:#102031;line-height:1.62;font-size:.98rem}
+        .course-card .course-note{display:block;margin-top:.6rem;color:var(--muted);font-size:.92rem}
+        .course-card:hover{transform:translateY(-6px);box-shadow:0 22px 48px rgba(11,20,30,0.08);border-color:rgba(11,37,64,0.08)}
+        .course-card:hover .course-note::before{transform:scale(1.08)}
+
+        /* Pricing refinements and micro-interactions */
+        .price-card{position:relative;overflow:visible;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+        .price-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(11,20,30,0.08);border-color:rgba(11,37,64,0.09)}
+        .price-amount{font-size:1.9rem;font-weight:900;color:var(--primary);line-height:1}
+        .price-amount.gradient{background:linear-gradient(90deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+        .price-card--featured{background:linear-gradient(180deg,#fff,rgba(242,243,247,0.98));border:1px solid rgba(242,183,5,0.12)}
+        .badge--save{animation:pulse 4s ease-in-out infinite}
+        @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+        /* Pricing extras */
+        .price-top{display:flex;flex-direction:row;align-items:baseline;gap:1rem}
+        .price-per-hour{font-size:.95rem;color:var(--muted);font-weight:600}
+        .price-savings{font-size:.9rem;color:var(--secondary);font-weight:700;margin-top:.25rem}
+        .price-footer{margin-top:1rem;display:flex;gap:.5rem}
+        .price-card details{width:100%;margin-top:.6rem}
+        .price-card summary{cursor:pointer;list-style:none;padding:.45rem .6rem;border-radius:8px;background:rgba(11,37,64,0.03);font-weight:700;color:var(--primary)}
+        .price-card summary::-webkit-details-marker{display:none}
+        .price-card details[open] summary{background:rgba(11,37,64,0.06)}
+        .price-card--featured::after{content:'Consigliata';position:absolute;top:12px;right:12px;background:var(--secondary);color:#0b2540;padding:.35rem .6rem;border-radius:999px;font-weight:800;font-size:.85rem;box-shadow:0 6px 18px rgba(242,183,5,0.12)}
+        .price-amount .per{font-size:.9rem;color:var(--muted);font-weight:700;margin-left:.5rem}
+        @media(max-width:520px){.price-top{flex-direction:column;align-items:flex-start;gap:.25rem}.price-card{padding:1rem}.price-footer{flex-direction:column}.price-amount{font-size:1.4rem}}
+
+        @media(min-width:900px){
+            .courses-grid{grid-template-columns:repeat(3,1fr)}
+        }
+        @media(min-width:1200px){
+            .courses-grid{grid-template-columns:repeat(4,1fr)}
+        }
+
+        .card .benefit{display:flex;align-items:flex-start;gap:.6rem;margin-top:.45rem}
+        .card .benefit svg{flex-shrink:0;margin-top:.18rem}
+        .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(11,20,30,0.06)}
+        @media(min-width:780px){.grid.formats-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:780px){
+            .header-inner{flex-direction:column;align-items:flex-start;gap:.6rem;padding:.6rem 0}
+            .nav{width:100%;display:flex;gap:.5rem;flex-wrap:wrap}
+            .nav a{padding:.45rem .5rem}
+            .brand{width:100%;display:flex;justify-content:space-between}
+            .socials{margin-top:.4rem}
+        }
+
+        /* Icon buttons and socials */
+        .icon-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .7rem;border-radius:10px;background:transparent;border:1px solid rgba(12,34,50,0.06);color:var(--primary);text-decoration:none;transition:transform .12s ease,background .12s ease}
+        .icon-btn:hover{transform:scale(1.02);background:rgba(18,62,102,0.04)}
+        .icon{width:16px;height:16px;display:inline-block;vertical-align:middle}
+        .socials{display:flex;gap:.6rem;align-items:center}
+        .socials a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;color:var(--muted);background:transparent;border:1px solid rgba(16,24,40,0.03);transition:transform .12s ease,background .12s ease}
+        .socials a:hover{transform:scale(1.06);background:rgba(18,62,102,0.06);color:var(--secondary)}
+        .socials svg{width:18px;height:18px}
+
+        footer{padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:.9rem}
+
+        /* Accessibility */
+        a:focus{outline:3px solid rgba(18,62,102,0.12);outline-offset:3px;border-radius:8px}
+
+        /* Simple reveal */
+        .reveal{opacity:0;transform:translateY(18px);animation:reveal .6s ease forwards}
+        .reveal-delay{animation-delay:.12s}
+        @keyframes reveal{to{opacity:1;transform:none}}
+    </style> 
+</head>
+<body>
+    <header>
+      <div class="container header-inner">
+        <a class="brand" href="#">
+          <div class="logo">MM</div>
+          <div class="brand-text"><strong>Mattia Martinoni</strong><span class="role">Informatico di gestione</span></div>
+        </a>
+        <button class="hamburger" aria-label="Apri menu" aria-expanded="false" aria-controls="main-nav"><span class="hamburger-box"><span class="hamburger-inner"></span></span></button>
+        <nav id="main-nav" class="nav" aria-label="Main navigation">
+          <a href="#services">Servizi</a>
+          <a href="#courses">Corsi</a>
+          <a href="#private">Privati</a>
+          <a class="icon-btn" href="Mattia_Martinoni_CV.pdf" download aria-label="Scarica CV"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>CV</a>
+          <a class="nav-cta" href="mailto:mattia@example.com">Contattami</a>
+        </nav>
+        <div class="socials" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7 0h4.8v2.18h.07c.67-1.27 2.31-2.6 4.76-2.6C22.72 7.58 24 10.03 24 14.2V24h-5V15.2c0-2.1-.04-4.8-2.92-4.8-2.92 0-3.37 2.28-3.37 4.62V24H7V8z"/></svg></a>
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.41 7.86 10.94.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.38-3.87-1.38-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.75.4-1.24.73-1.52-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.52-1.47.11-3.06 0 0 .96-.31 3.14 1.18a10.9 10.9 0 0 1 2.86-.39c.97 0 1.95.13 2.86.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.68.41.36.77 1.08.77 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.67.8.56C20.71 21.41 24 17.09 24 12 24 5.65 18.35.5 12 .5z"/></svg></a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero reveal" id="hero" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <div class="left reveal reveal-delay">
+            <h1 id="hero-title">Docente informatica — ICA</h1>
+            <p class="eyebrow">Mattia Martinoni — Informatico di gestione</p>
+            <p class="lead"><strong>Specialista della didattica</strong>. Formazione per scuole, privati e piccole imprese: lezioni pratiche, laboratori e percorsi personalizzati su Excel, Word, PowerPoint, banche dati e siti web. Percorsi su misura, supporto alla didattica e formazione orientata al lavoro.</p>
+            <div class="hero-ctas">
+              <a class="cta" href="mailto:mattia@example.com">Prenota una consulenza</a>
+              <a class="secondary" href="#courses">Vedi i corsi</a>
+            </div> 
+          </div>
+          <aside class="right reveal" aria-hidden="true">
+            <img src="assets/illustration-hero.svg" alt="Illustrazione insegnamento" class="hero-illustration" aria-hidden="true">
+            <div class="profile-card">
+              <img src="assets/profile.svg" alt="Foto di Mattia Martinoni" class="avatar-img">
+              <div class="profile-info">
+                <p class="name">Mattia Martinoni</p>
+                <p class="job">Docente • Tutor • Specialista didattica</p>
+                <p class="tag">Metodo pratico • Laboratori • Progetti</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+        <section id="overview" aria-labelledby="overview-title">
+            <div class="section-title"><h2 id="overview-title">Cosa offro</h2></div>
+            <p class="lead">Formazione pratica e orientata a risultati concreti: aumento della produttività, competenze spendibili sul lavoro e supporto reale per studenti e professionisti. Programmi chiari, misurabili e pensati per essere immediatamente applicabili.</p>
+
+            <div class="grid">
+                <div class="card offer-card">
+                    <img src="assets/teaching.svg" alt="" class="card-illustration" aria-hidden="true">
+                    <h3>Risultati misurabili</h3>
+                    <p>Definiamo obiettivi iniziali e indicatori di progresso per ogni percorso: es. riduzione tempi di lavoro su fogli di calcolo, miglioramento qualità presentazioni e competenze valutabili.</p>
+                </div>
+                <div class="card offer-card">
+                    <img src="assets/teaching.svg" alt="" class="card-illustration" aria-hidden="true">
+                    <h3>Percorsi personalizzati</h3>
+                    <p>Programmi progettati sul tuo livello e sulle tue esigenze: lezioni modulari, esercitazioni pratiche e progetto finale per consolidare le competenze.</p>
+                </div>
+                <div class="card offer-card">
+                    <img src="assets/teaching.svg" alt="" class="card-illustration" aria-hidden="true">
+                    <h3>Supporto continuo</h3>
+                    <p>Follow-up dopo il corso con materiali, esercizi e assistenza via email per garantire l'applicazione nel tempo.</p>
+                </div>
+            </div>
+
+            <p style="margin-top:1rem">Vuoi una valutazione gratuita del tuo caso? <a class="cta" href="mailto:mattia@example.com?subject=Valutazione%20gratuita">Richiedi una valutazione gratuita</a></p>
+        </section>
+
+        <section id="services" aria-labelledby="services-title">
+            <h2 id="services-title">Servizi</h2> 
+            <div class="grid">
+                <div class="card">
+                    <h3>Formazione scolastica</h3>
+                    <p>Programmi per studenti delle classi prima e seconda commercio: introduzione all'informatica, calcolo, burotica, informatica per il commercio.</p>
+                </div>
+                <div class="card">
+                    <h3>Corsi per privati</h3>
+                    <p>Lezioni individuali o in piccoli gruppi su Excel, Word, PowerPoint, introduzione alle banche dati e creazione di siti web. Percorsi personalizzati in base al livello e agli obiettivi.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="approach" aria-labelledby="approach-title">
+            <h2 id="approach-title">Approccio didattico</h2>
+            <p class="lead">Metodo chiaro e ripetibile per garantire progressi misurabili in tempi brevi.</p>
+            <ol>
+                <li><strong>Valutazione</strong> — analisi iniziale del livello e degli obiettivi per definire il percorso.</li>
+                <li><strong>Piano personalizzato</strong> — moduli e milestone con indicatori di progresso misurabili.</li>
+                <li><strong>Pratica guidata</strong> — esercizi reali, file di lavoro e progetti per consolidare le competenze.</li>
+                <li><strong>Verifica &amp; follow‑up</strong> — test, report di avanzamento e supporto post‑lezione via email.</li>
+            </ol>
+        </section>
+
+        <section id="courses" aria-labelledby="courses-title">
+            <h2 id="courses-title">Corsi principali</h2>
+            <img src="assets/excel.svg" alt="Icona corsi" class="section-illu" aria-hidden="true">
+            <div class="courses-grid">
+                <article class="course-card">
+                    <h4>Introduzione all'informatica</h4>
+                    <p class="course-desc">Nozioni di base, gestione file e sicurezza digitale per acquisire confidenza con gli strumenti digitali.</p>
+                    <span class="course-note">Ideale per studenti alle prime armi che vogliono basi solide e sicurezza digitale.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Calcolo</h4>
+                    <p class="course-desc">Concetti fondamentali applicati a fogli di calcolo e analisi dati, con esercizi mirati.</p>
+                    <span class="course-note">Ideale per studenti che devono affrontare esercizi, verifiche e compiti con più sicurezza.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Burotica / Office automation</h4>
+                    <p class="course-desc">Flussi di lavoro con Word, Outlook e strumenti di automazione per attività d'ufficio e scolastiche.</p>
+                    <span class="course-note">Ideale per studenti che vogliono gestire documenti d'esame e attività pratiche d'ufficio.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Excel (base e avanzato)</h4>
+                    <p class="course-desc">Funzioni, tabelle pivot e formule avanzate per analisi e automazioni pratiche.</p>
+                    <span class="course-note">Ideale per studenti che preparano progetti, analisi dati o tesi con fogli di calcolo.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Word</h4>
+                    <p class="course-desc">Impaginazione professionale, stili e modelli riutilizzabili per documenti scolastici e tesine.</p>
+                    <span class="course-note">Ideale per studenti che vogliono tesine e documenti ben impaginati e professionali.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>PowerPoint</h4>
+                    <p class="course-desc">Struttura e design per presentazioni chiare ed efficaci.</p>
+                    <span class="course-note">Ideale per studenti che presentano progetti, esami orali o discussioni di tesi.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Introduzione alle banche dati</h4>
+                    <p class="course-desc">Modelli dati e interrogazioni di base (introduzione a SQL) per lavorare con dataset reali.</p>
+                    <span class="course-note">Ideale per studenti che lavorano con dati e vogliono comprendere le basi di SQL.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Creazione siti web (base)</h4>
+                    <p class="course-desc">Pagine semplici, contenuti e pubblicazione online per creare un portfolio o progetto scolastico.</p>
+                    <span class="course-note">Ideale per studenti che desiderano un portfolio online o un progetto personale.</span>
+                </article>
+
+                <article class="course-card">
+                    <h4>Informatica per il commercio (anno 1 e 2)</h4>
+                    <p class="course-desc">Programma coerente con gli obiettivi curriculari e con attenzione ad esercitazioni pratiche.</p>
+                    <span class="course-note">Ideale per studenti dei corsi commerciali che vogliono prepararsi agli esami e al lavoro pratico.</span>
+                </article>
+            </div>
+        </section>
+
+        <section id="private" aria-labelledby="private-title">
+            <h2 id="private-title">Insegnamento - Privati</h2>
+            <p class="lead">Percorsi individuali costruiti soprattutto per studenti: migliorare voti, metodo di studio e preparazione ad attività pratiche ed esami. Impari facendo, con esercizi tracciabili, materiale riutilizzabile e supporto post-lezione. Prima lezione di prova di 30 minuti gratuita per definire il piano (soggetta a disponibilità). Offro opzioni flessibili: lezioni 1:1, piccoli gruppi o pacchetti con sconto.</p>
+            <p style="margin-top:.6rem"><a class="cta" href="mailto:mattia@example.com?subject=Prenotazione%20consulenza%20privati" aria-label="Richiedi consulenza privati">Prenota una consulenza</a></p>
+
+            <div class="grid formats-grid">
+                <div class="card card--feature">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14M5 12h14" stroke="#fff"/></svg>
+                    </div>
+                    <div>
+                        <h3>Formati</h3>
+                        <p class="lead">Le lezioni sono progettate per dare valore immediato: percorsi modulari, esercitazioni su casi reali e materiale che puoi usare subito al lavoro o a scuola.</p>
+                        <div class="benefit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg><div>Lezione 1: definizione obiettivi e piano personalizzato</div></div>
+                        <div class="benefit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg><div>Materiale pratico e file di esercitazione</div></div>
+                        <div class="benefit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg><div>Opzioni: 1:1, piccoli gruppi o pacchetti intensivi</div></div>
+                        <div style="margin-top:.6rem"><a class="icon-btn" href="mailto:mattia@example.com?subject=Info%20Formati">Richiedi informazioni</a></div>
+                    </div>
+                </div>
+
+                <div class="card card--feature">
+                    <div class="icon-circle" aria-hidden="true">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3" stroke="#fff"/><path d="M6 20c1.5-2.5 4.5-4 6-4s4.5 1.5 6 4" stroke="#fff"/></svg>
+                    </div>
+                    <div>
+                        <h3>Per chi è</h3>
+                        <p class="lead">Perfetto per studenti, professionisti e privati che vogliono imparare strumenti utili e spendibili da subito: aumento dell'efficienza, migliori presentazioni e competenze digitali pratiche.</p>
+                        <div class="benefit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg><div>Studenti: consolidare i voti e il metodo di studio</div></div>
+                        <div class="benefit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg><div>Professionisti: risparmiare tempo con processi più efficienti</div></div>
+                        <div class="benefit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"/></svg><div>Privati: gestire meglio attività quotidiane e progetti personali</div></div>
+                        <div style="margin-top:.6rem"><a class="icon-btn" href="mailto:mattia@example.com?subject=Informazioni%20Privati">Parliamone</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Offerta e tariffe</h3>
+            <div class="pricing-grid">
+                <div class="price-card price-card--featured" aria-label="Scheda tariffa oraria - consigliata">
+                    <div class="badge badge--tip">Tariffa oraria</div>
+                    <div class="price-top">
+                        <div class="price-amount gradient">CHF 60</div>
+                        <div class="price-per-hour">CHF 60 / ora</div>
+                    </div>
+                    <p class="price-desc">Lezione 1:1 mirata, materiale pratico incluso e supporto post-lezione. Ideale per esigenze puntuali o aiutare studenti con compiti specifici.</p>
+                    <details>
+                        <summary aria-expanded="false">Cosa è incluso</summary>
+                        <ul class="price-features">
+                            <li>Lezione personalizzata 1:1</li>
+                            <li>Materiale pratico e file esercitazione</li>
+                            <li>Supporto post-lezione via email</li>
+                        </ul>
+                    </details>
+                    <div class="price-footer"><a class="cta cta--solid price-cta" href="mailto:mattia@example.com?subject=Prenotazione%20CHF%2060" aria-label="Prenota tariffa oraria">Prenota ora</a></div>
+                </div>
+
+                <div class="price-card price-card--pack">
+                    <div class="badge badge--save">Pacchetto 5h <span style="margin-left:.45rem;font-weight:700;color:#0b2540">-5%</span></div>
+                    <div class="price-top">
+                        <div class="price-amount">CHF 285</div>
+                        <div class="price-per-hour">CHF 57 / ora</div>
+                    </div>
+                    <p class="price-desc">Pacchetto intensivo per obiettivi concreti: rapida crescita di competenze pratiche e report di avanzamento.</p>
+                    <details>
+                        <summary aria-expanded="false">Cosa è incluso</summary>
+                        <ul class="price-features">
+                            <li>Lezione d'avvio e piano personalizzato</li>
+                            <li>Materiale pratico incluso</li>
+                            <li>Feedback strutturato e report</li>
+                        </ul>
+                    </details>
+                    <div class="price-savings">Risparmio: CHF 3 / ora rispetto alla tariffa singola</div>
+                    <div class="price-footer"><a class="cta price-cta" href="mailto:mattia@example.com?subject=Prenotazione%20Pacchetto%205%20ore" aria-label="Acquista pacchetto 5 ore">Acquista pacchetto</a></div>
+                </div>
+
+                <div class="price-card price-card--pack price-card--featured">
+                    <div class="badge badge--save">Pacchetto 10h <span style="margin-left:.45rem;font-weight:700;color:#0b2540">-10%</span></div>
+                    <div class="price-top">
+                        <div class="price-amount gradient">CHF 540</div>
+                        <div class="price-per-hour">CHF 54 / ora</div>
+                    </div>
+                    <p class="price-desc">Percorso completo per risultati misurabili: valutazione iniziale, materiale e report finale, possibilità di lezioni in gruppo o individuali.</p>
+                    <details>
+                        <summary aria-expanded="false">Cosa è incluso</summary>
+                        <ul class="price-features">
+                            <li>Valutazione iniziale dettagliata</li>
+                            <li>Report finale con suggerimenti</li>
+                            <li>Supporto post-corso via email</li>
+                        </ul>
+                    </details>
+                    <div class="price-savings">Risparmio: CHF 6 / ora rispetto alla tariffa singola</div>
+                    <div class="price-footer"><a class="cta cta--solid price-cta" href="mailto:mattia@example.com?subject=Prenotazione%20Pacchetto%2010%20ore" aria-label="Acquista pacchetto 10 ore">Acquista pacchetto</a></div>
+                </div>
+            </div>
+
+            <p style="margin-top:1rem">Lezioni modulari: definiamo insieme obiettivi e contenuti prima della prima lezione. Possibilità di materiale di esercitazione e report di avanzamento.</p>
+
+            <h3>Perché scegliere queste lezioni</h3>
+            <ul>
+                <li>Approccio pratico: impari facendo (esempi reali e file di lavoro)</li>
+                <li>Contenuti personalizzati in base al tuo livello e obiettivi</li>
+                <li>Supporto post-lezione via email per chiarimenti e materiali</li>
+            </ul>
+
+            <div style="margin-top:1rem;display:flex;gap:.8rem;flex-wrap:wrap;align-items:center">
+                <a class="cta" href="mailto:mattia@example.com?subject=Prenotazione%20lezioni%20private">Prenota una consulenza</a>
+                <a class="secondary" href="#contact">Contattami per maggiori dettagli</a>
+            </div> 
+
+            <p style="margin-top:1rem;color:var(--muted);font-size:.9rem">Prima lezione di prova: 30 minuti gratuita per definire il percorso (soggetta a disponibilità).</p>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Contatti</h2> 
+            <p>Per informazioni, proposte di collaborazione o lezioni: <a href="mailto:mattia@example.com">mattia@example.com</a></p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="display:flex;gap:1rem;align-items:center;justify-content:center;flex-direction:column">
+          <div style="display:flex;gap:1rem;align-items:center">
+            <div>© <strong>Mattia Martinoni</strong> — Informatico di gestione</div>
+            <div class="socials" style="margin-left:.6rem">
+              <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7 0h4.8v2.18h.07c.67-1.27 2.31-2.6 4.76-2.6C22.72 7.58 24 10.03 24 14.2V24h-5V15.2c0-2.1-.04-4.8-2.92-4.8-2.92 0-3.37 2.28-3.37 4.62V24H7V8z"/></svg></a>
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.41 7.86 10.94.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.38-3.87-1.38-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.75.4-1.24.73-1.52-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.52-1.47.11-3.06 0 0 .96-.31 3.14 1.18a10.9 10.9 0 0 1 2.86-.39c.97 0 1.95.13 2.86.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.68.41.36.77 1.08.77 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.67.8.56C20.71 21.41 24 17.09 24 12 24 5.65 18.35.5 12 .5z"/></svg></a>
+            </div>
+          </div>
+          <div style="margin-top:.5rem;color:var(--muted);font-size:.9rem">Grazie per la visita — contattami per informazioni e lezioni</div>
+        </div>
+    </footer>
+    <script>
+    // Mobile nav toggle (hamburger) + details behaviour for pricing
+    (function(){
+      const btn = document.querySelector('.hamburger');
+      const nav = document.getElementById('main-nav');
+      if(btn && nav){
+        btn.addEventListener('click', function(e){
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', String(!expanded));
+          btn.classList.toggle('is-active');
+          nav.classList.toggle('nav--open');
+        });
+        // Close when clicking outside
+        document.addEventListener('click', function(e){
+          if(!nav.classList.contains('nav--open')) return;
+          if(!nav.contains(e.target) && !btn.contains(e.target)){
+            btn.setAttribute('aria-expanded','false');
+            btn.classList.remove('is-active');
+            nav.classList.remove('nav--open');
+          }
+        });
+        // Close on ESC
+        document.addEventListener('keydown', function(e){
+          if(e.key === 'Escape'){
+            btn.setAttribute('aria-expanded','false');
+            btn.classList.remove('is-active');
+            nav.classList.remove('nav--open');
+          }
+        });
+      }
+
+      // Pricing details: only one open at a time and update summary aria-expanded
+      const details = document.querySelectorAll('.pricing-grid details');
+      details.forEach(d=>{
+        const summary = d.querySelector('summary');
+        if(summary){
+          summary.addEventListener('click', function(){
+            // toggle aria-expanded manually (some browsers don't update on toggle event until after)
+            const expanded = d.open;
+            summary.setAttribute('aria-expanded', String(!expanded));
+          });
+        }
+        d.addEventListener('toggle', function(){
+          if(d.open){
+            details.forEach(other=>{ if(other!==d) { other.open=false; const s=other.querySelector('summary'); if(s) s.setAttribute('aria-expanded','false'); }});
+            const s = d.querySelector('summary'); if(s) s.setAttribute('aria-expanded','true');
+          } else {
+            const s = d.querySelector('summary'); if(s) s.setAttribute('aria-expanded','false');
+          }
+        });
+      });
+    })();
+    </script>
+</body>
+</html>
