@@ -208,20 +208,37 @@
         .contact-info p{margin:0 0 .6rem}
         .contact-info .contact-line{display:flex;gap:.6rem;align-items:center}
         .contact-info .contact-line .icon{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:.5rem;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px}
-        .contact-form{padding:1.25rem;border-radius:12px;background:var(--surface);border:1px solid rgba(16,24,40,0.04);box-shadow:0 12px 40px rgba(11,20,30,0.04);display:flex;flex-direction:column}
-        .contact-form h3{margin:0 0 .4rem}
-        .contact-form label{display:block;font-weight:700;margin-top:.6rem;margin-bottom:.25rem}
-        .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:.75rem;border-radius:10px;border:1px solid rgba(16,24,40,0.06);box-shadow:inset 0 2px 6px rgba(11,20,30,0.02);font-size:var(--para-fz);transition:box-shadow .15s ease,transform .12s ease}
-        .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{outline:none;box-shadow:0 6px 24px rgba(11,20,30,0.06);transform:translateY(-2px);border-color:rgba(11,37,64,0.09)}
-        .contact-form textarea{min-height:140px;resize:vertical}
-        .contact-form .cta{align-self:flex-start;padding:.72rem 1.05rem;border-radius:10px;background:var(--primary);color:#fff;border:0}
-        .contact-form .cta:hover{background:#072036;transform:translateY(-2px);box-shadow:0 14px 30px rgba(11,20,30,0.08)}
-        .contact-form .secondary{background:transparent;border:1px solid rgba(16,24,40,0.06)}
-        .contact-form .field-error{color:#b44;font-size:.92rem;margin-top:.3rem;display:none}
-        .contact-form .field-error.active{display:block}
-        #contactStatus{color:var(--primary);font-weight:700;margin-top:.6rem;display:flex;align-items:center;gap:.6rem}
-        #contactStatus .dot{width:10px;height:10px;border-radius:999px;background:var(--secondary);display:inline-block}
-        .contact-success{background:linear-gradient(90deg,#e6f9f1, #f0fff8);border:1px solid rgba(34,197,94,0.06);padding:.8rem;border-radius:10px;margin-top:.6rem;color:#166534} 
+
+        /* Form: modern floating labels, input icons and improved CTA */
+        .contact-form{padding:1.25rem;border-radius:14px;background:var(--surface);border:1px solid rgba(16,24,40,0.04);box-shadow:0 18px 44px rgba(11,20,30,0.06);display:flex;flex-direction:column;gap:.4rem}
+        .contact-form h3{margin:0 0 .6rem}
+        .form-row{position:relative;margin-top:.6rem}
+        .form-row input,.form-row textarea,.form-row select{width:100%;padding:.85rem .9rem .85rem 48px;border-radius:10px;border:1px solid rgba(16,24,40,0.06);background:transparent;transition:box-shadow .14s ease,transform .12s ease}
+        .form-row textarea{min-height:140px;resize:vertical;padding:14px .9rem .9rem 48px}
+        .input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
+        .form-row label{position:absolute;left:48px;top:50%;transform:translateY(-50%);transition:transform .16s ease,font-size .14s ease,color .14s ease;pointer-events:none;color:var(--muted);background:transparent;padding:.1rem .2rem}
+        .form-row input:focus + label,.form-row textarea:focus + label,.form-row select:focus + label,
+        .form-row.has-value label{transform:translateY(-150%) scale(.9);font-size:.85rem;color:var(--primary)}
+        .form-row input:focus,.form-row textarea:focus,.form-row select:focus{outline:none;box-shadow:0 10px 30px rgba(11,20,30,0.06);transform:translateY(-2px);border-color:rgba(11,37,64,0.09)}
+        .form-row .field-error{position:relative;margin-top:.45rem;color:#b44;font-size:.92rem;display:none}
+        .form-row .field-error.active{display:block}
+        .contact-form .cta{align-self:flex-start;padding:.72rem 1.15rem;border-radius:12px;background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff;border:0;font-weight:900;box-shadow:0 12px 30px rgba(11,20,30,0.08)}
+        .contact-form .cta:hover{transform:translateY(-3px);box-shadow:0 20px 48px rgba(11,20,30,0.12)}
+        .contact-form .secondary{background:transparent;border:1px solid rgba(16,24,40,0.06);padding:.6rem .9rem;border-radius:10px}
+        .meta-row{display:flex;gap:.6rem;align-items:center;margin-top:.6rem}
+
+        /* Toast */
+        .toast{position:fixed;right:22px;bottom:22px;padding:.6rem .9rem;border-radius:12px;background:linear-gradient(90deg,var(--primary),#0b2540);color:#fff;box-shadow:0 12px 40px rgba(11,20,30,0.16);transform:translateY(12px);opacity:0;transition:transform .18s ease,opacity .18s ease;z-index:40}
+        .toast.show{opacity:1;transform:none}
+
+        /* Small helper */
+        .muted-small{color:var(--muted);font-size:.9rem}
+
+        /* Ensure accessibility */
+        .contact-form input[disabled],.contact-form textarea[disabled],.contact-form select[disabled]{opacity:.6}
+
+        /* Contact success card */
+        .contact-success{background:linear-gradient(90deg,#e6f9f1, #f0fff8);border:1px solid rgba(34,197,94,0.06);padding:.8rem;border-radius:10px;margin-top:.6rem;color:#166534}  
 
         /* FAQ section */
         .faq-grid{display:grid;gap:1rem;margin-top:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
@@ -570,47 +587,62 @@
 
                 <form class="card contact-form" id="contactForm" aria-labelledby="contact-title" novalidate>
                     <h3>Scrivimi</h3>
-                    <label for="c_name">Nome</label>
-                    <input id="c_name" name="name" type="text" required placeholder="Es. Maria Rossi">
-                    <div class="field-error" id="err_name">Inserisci il tuo nome</div>
 
-                    <label for="c_email">Email</label>
-                    <input id="c_email" name="email" type="email" required placeholder="tua@email.com">
-                    <div class="field-error" id="err_email">Inserisci una email valida</div>
+                    <div class="form-row" id="row_name">
+                      <span class="input-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 20v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                      <input id="c_name" name="name" type="text" required placeholder=" " aria-describedby="err_name">
+                      <label for="c_name">Nome</label>
+                      <div class="field-error" id="err_name">Inserisci il tuo nome</div>
+                    </div>
 
-                    <label for="c_subject">Oggetto</label>
-                    <select id="c_subject" name="subject" required>
+                    <div class="form-row" id="row_email">
+                      <span class="input-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16v16H4z" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 6l-10 7L2 6" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                      <input id="c_email" name="email" type="email" required placeholder=" " aria-describedby="err_email">
+                      <label for="c_email">Email</label>
+                      <div class="field-error" id="err_email">Inserisci una email valida</div>
+                    </div>
+
+                    <div class="form-row" id="row_subject">
+                      <span class="input-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h18" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 12h18" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                      <select id="c_subject" name="subject" required aria-describedby="err_subject">
                         <option value="">Seleziona...</option>
                         <option>Info corsi</option>
                         <option>Richiesta preventivo</option>
                         <option>Collaborazione</option>
                         <option>Altro</option>
-                    </select>
-                    <div class="field-error" id="err_subject">Seleziona un oggetto</div>
+                      </select>
+                      <label for="c_subject">Oggetto</label>
+                      <div class="field-error" id="err_subject">Seleziona un oggetto</div>
+                    </div>
 
-                    <label for="c_message">Messaggio</label>
-                    <textarea id="c_message" name="message" rows="5" required placeholder="Scrivi qui..."></textarea>
-                    <div class="field-error" id="err_message">Scrivi un messaggio</div>
+                    <div class="form-row" id="row_message">
+                      <span class="input-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                      <textarea id="c_message" name="message" rows="5" required placeholder=" " aria-describedby="err_message"></textarea>
+                      <label for="c_message">Messaggio</label>
+                      <div class="field-error" id="err_message">Scrivi un messaggio</div>
+                    </div>
 
                     <!-- Honeypot anti-spam -->
                     <label style="display:none">Non compilare
                       <input name="_hp" type="text" autocomplete="off" style="display:none">
                     </label>
 
-                    <div style="display:flex;gap:.6rem;align-items:center;margin-top:.45rem">
+                    <div class="meta-row">
+                      <div style="display:flex;gap:.6rem;align-items:center">
                         <input id="c_consent" type="checkbox" required>
                         <label for="c_consent" style="margin:0">Acconsento all'invio dei miei dati per essere ricontattato.</label>
+                      </div>
+                      <div class="muted-small" style="margin-left:auto">Risponderò entro 48 ore lavorative.</div>
                     </div>
 
-                    <div class="muted" id="contactNote" style="font-size:.95rem;margin-top:.4rem">Risponderò entro 48 ore lavorative.</div>
-
-                    <div style="margin-top:1rem;display:flex;gap:.6rem">
+                    <div style="margin-top:1rem;display:flex;gap:.6rem;align-items:center">
                         <button class="cta" type="submit">Invia messaggio</button>
                         <button class="secondary" type="reset">Reset</button>
                     </div>
 
                     <div aria-live="polite" id="contactStatus" style="margin-top:.6rem"></div>
-                </form>
+                    <div id="contactToast" class="toast" role="status" aria-live="polite" hidden></div>
+                </form> 
             </div>
         </section>
     </main>
@@ -699,28 +731,31 @@
         });
       });
 
-      // Contact form handler: enhanced validation and polished success state
+      // Contact form handler: floating labels, validation, toast and improved UX
       const contactForm = document.getElementById('contactForm');
       const contactStatus = document.getElementById('contactStatus');
+      const contactToast = document.getElementById('contactToast');
+
+      function showToast(text, timeout=2200){
+        if(!contactToast) return;
+        contactToast.hidden = false; contactToast.textContent = text; contactToast.classList.add('show');
+        setTimeout(()=>{ contactToast.classList.remove('show'); setTimeout(()=>{ contactToast.hidden=true; contactToast.textContent=''; },220); }, timeout);
+      }
+
       if(contactForm){
-        // show/clear per-field errors on input
-        ['name','email','subject','message'].forEach(id => {
-          const el = contactForm.querySelector(`[name="${id}"]`);
-          if(el){ el.addEventListener('input', ()=>{
-            const err = document.getElementById('err_' + id);
-            if(err) err.classList.remove('active');
-          })}
+        // Floating label: set 'has-value' on load for prefilled fields
+        ['name','email','subject','message'].forEach(name=>{
+          const el = contactForm.querySelector(`[name="${name}"]`);
+          if(el && el.value.trim()!=='') el.parentElement.classList.add('has-value');
+          if(el){ el.addEventListener('input', ()=>{ if(el.value.trim()!=='') el.parentElement.classList.add('has-value'); else el.parentElement.classList.remove('has-value'); const err=document.getElementById('err_'+name); if(err) err.classList.remove('active'); }); el.addEventListener('focus', ()=> el.parentElement.classList.add('focus')); el.addEventListener('blur', ()=> el.parentElement.classList.remove('focus')); }
         });
 
         contactForm.addEventListener('submit', function(e){
           e.preventDefault();
-          // Honeypot check
-          if(contactForm.querySelector('[name="_hp"]').value){
-            // silently drop spam
-            return;
-          }
+          // Honeypot
+          if(contactForm.querySelector('[name="_hp"]').value) return;
 
-          // Basic required checks
+          // validate
           let valid = true;
           const name = contactForm.name.value.trim();
           const email = contactForm.email.value.trim();
@@ -728,63 +763,44 @@
           const message = contactForm.message.value.trim();
           const consent = document.getElementById('c_consent');
 
-          if(!name){ document.getElementById('err_name').classList.add('active'); valid = false; }
-          if(!email || !/.+@.+\..+/.test(email)){ document.getElementById('err_email').classList.add('active'); valid = false; }
-          if(!subject){ document.getElementById('err_subject').classList.add('active'); valid = false; }
-          if(!message){ document.getElementById('err_message').classList.add('active'); valid = false; }
-          if(!consent || !consent.checked){ contactStatus.style.color = '#b44'; contactStatus.textContent = 'Accetta il consenso per procedere.'; valid = false; }
+          if(!name){ document.getElementById('err_name').classList.add('active'); valid=false; }
+          if(!email || !/.+@.+\..+/.test(email)){ document.getElementById('err_email').classList.add('active'); valid=false; }
+          if(!subject){ document.getElementById('err_subject').classList.add('active'); valid=false; }
+          if(!message){ document.getElementById('err_message').classList.add('active'); valid=false; }
+          if(!consent || !consent.checked){ showToast('Per favore accetta il consenso.'); valid=false; }
 
-          if(!valid){
-            // focus first invalid
-            const firstErr = contactForm.querySelector('.field-error.active');
-            if(firstErr){
-              const idx = firstErr.id.replace('err_','');
-              const focusEl = contactForm.querySelector(`[name="${idx}"]`);
-              focusEl && focusEl.focus();
-            }
-            return;
-          }
+          if(!valid){ const first = contactForm.querySelector('.field-error.active'); first && first.previousElementSibling && first.previousElementSibling.focus(); return; }
 
-          // Build mailto preview but show polished confirmation before opening client
-          contactStatus.innerHTML = '<span class="contact-success">Messaggio pronto. Clicca <button id="openMail" class="cta" type="button">Apri il tuo client email</button> per inviare o scegli di copiare il testo.</span>';
+          // Prepare message
           const mailtoSubject = encodeURIComponent(`[Sito] ${subject} — ${name}`);
           const body = `Nome: ${name}\nEmail: ${email}\n\n${message}`;
           const mailtoBody = encodeURIComponent(body);
 
-          // disable form inputs visually
+          // Disable inputs
           Array.from(contactForm.elements).forEach(el => el.disabled = true);
 
-          // add open-mail handler
-          document.getElementById('openMail').addEventListener('click', function(){
-            window.location.href = `mailto:mattia@example.com?subject=${mailtoSubject}&body=${mailtoBody}`;
-          });
+          // Show inline action card
+          contactStatus.innerHTML = '';
+          const successWrap = document.createElement('div'); successWrap.className='contact-success';
+          successWrap.innerHTML = 'Messaggio pronto. <button id="openMail" class="cta" type="button">Apri il client email</button>';
+          contactStatus.appendChild(successWrap);
 
-          // also allow copy-to-clipboard of message
-          const copyBtn = document.createElement('button');
-          copyBtn.className = 'secondary'; copyBtn.type = 'button'; copyBtn.textContent = 'Copia testo';
-          copyBtn.style.marginLeft = '.6rem';
-          copyBtn.addEventListener('click', function(){
-            navigator.clipboard && navigator.clipboard.writeText(body).then(()=>{
-              contactStatus.textContent = 'Testo copiato negli appunti.';
-            });
-          });
-          document.getElementById('openMail').insertAdjacentElement('afterend', copyBtn);
+          const openBtn = document.getElementById('openMail');
+          openBtn.addEventListener('click', ()=>{ showToast('Aperto client di posta...'); window.location.href = `mailto:mattia@example.com?subject=${mailtoSubject}&body=${mailtoBody}`; });
 
-          // show a reset option
-          const resetBtn = document.createElement('button');
-          resetBtn.className = 'secondary'; resetBtn.type = 'button'; resetBtn.textContent = 'Nuovo messaggio';
-          resetBtn.style.marginLeft = '.6rem';
-          resetBtn.addEventListener('click', function(){
-            contactForm.reset(); contactStatus.textContent = ''; Array.from(contactForm.elements).forEach(el=>el.disabled=false);
-            document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active'));
-          });
-          document.getElementById('openMail').insertAdjacentElement('afterend', resetBtn);
+          const copyBtn = document.createElement('button'); copyBtn.className='secondary'; copyBtn.type='button'; copyBtn.textContent='Copia testo'; copyBtn.style.marginLeft='.6rem';
+          copyBtn.addEventListener('click', ()=>{ navigator.clipboard && navigator.clipboard.writeText(body).then(()=> showToast('Testo copiato negli appunti')); });
+          openBtn.insertAdjacentElement('afterend', copyBtn);
+
+          const resetBtn = document.createElement('button'); resetBtn.className='secondary'; resetBtn.type='button'; resetBtn.textContent='Nuovo messaggio'; resetBtn.style.marginLeft='.6rem';
+          resetBtn.addEventListener('click', ()=>{ contactForm.reset(); contactStatus.textContent=''; Array.from(contactForm.elements).forEach(el=>el.disabled=false); document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active')); document.querySelectorAll('.form-row').forEach(r=>r.classList.remove('has-value')); });
+          openBtn.insertAdjacentElement('afterend', resetBtn);
+
+          // show toast
+          showToast('Pronto: invia dal tuo client o copia il testo');
         });
 
-        // Reset clears status
-        contactForm.addEventListener('reset', function(){
-          setTimeout(()=>{ contactStatus.textContent = ''; document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active')) }, 20);
-        });
+        contactForm.addEventListener('reset', function(){ setTimeout(()=>{ contactStatus.textContent=''; document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active')); document.querySelectorAll('.form-row').forEach(r=>r.classList.remove('has-value')); }, 30); });
       }
     })();
     </script>
