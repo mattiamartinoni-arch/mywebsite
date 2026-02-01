@@ -200,6 +200,17 @@
         /* Accessibility */
         a:focus{outline:3px solid rgba(18,62,102,0.12);outline-offset:3px;border-radius:8px}
 
+        /* Contact section */
+        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+        @media(max-width:780px){.contact-grid{grid-template-columns:1fr}}
+        .contact-info p{margin:0 0 .6rem}
+        .contact-form label{display:block;font-weight:700;margin-top:.6rem;margin-bottom:.25rem}
+        .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:.6rem;border-radius:8px;border:1px solid rgba(16,24,40,0.06);box-shadow:inset 0 2px 6px rgba(11,20,30,0.02);font-size:var(--para-fz)}
+        .contact-form textarea{min-height:120px;resize:vertical}
+        .contact-form .cta{align-self:flex-start}
+        #contactStatus{color:var(--primary);font-weight:700}
+        .contact-form :invalid{outline:2px solid rgba(242,20,5,0.06)}
+
         /* Simple reveal */
         .reveal{opacity:0;transform:translateY(18px);animation:reveal .6s ease forwards}
         .reveal-delay{animation-delay:.12s}
@@ -476,8 +487,54 @@
         </section>
 
         <section id="contact" aria-labelledby="contact-title">
-            <h2 id="contact-title">Contatti</h2> 
-            <p>Per informazioni, proposte di collaborazione o lezioni: <a href="mailto:mattia@example.com">mattia@example.com</a></p>
+            <div class="section-title"><h2 id="contact-title">Contatti</h2></div>
+            <div class="grid contact-grid">
+                <div class="card contact-info">
+                    <p class="lead">Per informazioni, proposte di collaborazione o lezioni:</p>
+                    <p><strong>Email:</strong> <a href="mailto:mattia@example.com">mattia@example.com</a></p>
+                    <p><strong>Telefono:</strong> <a href="tel:+41791234567">+41 79 123 4567</a> <span class="muted">(WhatsApp)</span></p>
+                    <p><strong>Orari:</strong> Lun–Ven 9:00–18:00</p>
+                    <p><a class="icon-btn" href="Mattia_Martinoni_CV.pdf" download aria-label="Scarica CV">Scarica CV</a></p>
+                    <div class="socials" style="margin-top:.6rem">
+                      <a href="https://www.linkedin.com/in/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0V8zm7 0h4.8v2.18h.07c.67-1.27 2.31-2.6 4.76-2.6C22.72 7.58 24 10.03 24 14.2V24h-5V15.2c0-2.1-.04-4.8-2.92-4.8-2.92 0-3.37 2.28-3.37 4.62V24H7V8z"/></svg></a>
+                      <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.41 7.86 10.94.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.38-3.87-1.38-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.75.4-1.24.73-1.52-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.52-1.47.11-3.06 0 0 .96-.31 3.14 1.18a10.9 10.9 0 0 1 2.86-.39c.97 0 1.95.13 2.86.39 2.18-1.49 3.14-1.18 3.14-1.18.63 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.68.41.36.77 1.08.77 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.67.8.56C20.71 21.41 24 17.09 24 12 24 5.65 18.35.5 12 .5z"/></svg></a>
+                    </div>
+                </div>
+
+                <form class="card contact-form" id="contactForm" aria-labelledby="contact-title" novalidate>
+                    <label for="c_name">Nome</label>
+                    <input id="c_name" name="name" type="text" required placeholder="Es. Maria Rossi">
+
+                    <label for="c_email">Email</label>
+                    <input id="c_email" name="email" type="email" required placeholder="tua@email.com">
+
+                    <label for="c_subject">Oggetto</label>
+                    <select id="c_subject" name="subject" required>
+                        <option value="">Seleziona...</option>
+                        <option>Info corsi</option>
+                        <option>Richiesta preventivo</option>
+                        <option>Collaborazione</option>
+                        <option>Altro</option>
+                    </select>
+
+                    <label for="c_message">Messaggio</label>
+                    <textarea id="c_message" name="message" rows="5" required placeholder="Scrivi qui..."></textarea>
+
+                    <div style="display:flex;gap:.6rem;align-items:center;margin-top:.45rem">
+                        <input id="c_consent" type="checkbox" required>
+                        <label for="c_consent" style="margin:0">Acconsento all'invio dei miei dati per essere ricontattato.</label>
+                    </div>
+
+                    <div class="muted" id="contactNote" style="font-size:.95rem;margin-top:.4rem">Risponderò entro 48 ore lavorative.</div>
+
+                    <div style="margin-top:1rem;display:flex;gap:.6rem">
+                        <button class="cta" type="submit">Invia messaggio</button>
+                        <button class="secondary" type="reset">Reset</button>
+                    </div>
+
+                    <div aria-live="polite" id="contactStatus" style="margin-top:.6rem"></div>
+                </form>
+            </div>
         </section>
     </main>
 
@@ -544,6 +601,33 @@
           }
         });
       });
+
+      // Contact form handler (client-side MAILTO fallback)
+      const contactForm = document.getElementById('contactForm');
+      const contactStatus = document.getElementById('contactStatus');
+      if(contactForm){
+        contactForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          const name = contactForm.name.value.trim();
+          const email = contactForm.email.value.trim();
+          const subject = contactForm.subject.value.trim() || 'Richiesta dal sito';
+          const message = contactForm.message.value.trim();
+          const consent = document.getElementById('c_consent');
+          if(!name || !email || !message || !consent || !consent.checked){
+            contactStatus.style.color = '#b44';
+            contactStatus.textContent = 'Per favore compila tutti i campi e accetta il consenso.';
+            contactStatus.focus && contactStatus.focus();
+            return;
+          }
+          contactStatus.style.color = '';
+          contactStatus.textContent = 'Apro il client di posta predefinito…';
+          const mailtoSubject = encodeURIComponent(`[Sito] ${subject} — ${name}`);
+          const body = `Nome: ${name}\nEmail: ${email}\n\n${message}`;
+          const mailtoBody = encodeURIComponent(body);
+          // Small timeout to show message before redirecting
+          setTimeout(function(){ window.location.href = `mailto:mattia@example.com?subject=${mailtoSubject}&body=${mailtoBody}`; }, 400);
+        });
+      }
     })();
     </script>
 </body>
