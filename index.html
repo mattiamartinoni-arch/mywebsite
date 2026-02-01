@@ -223,6 +223,17 @@
         #contactStatus .dot{width:10px;height:10px;border-radius:999px;background:var(--secondary);display:inline-block}
         .contact-success{background:linear-gradient(90deg,#e6f9f1, #f0fff8);border:1px solid rgba(34,197,94,0.06);padding:.8rem;border-radius:10px;margin-top:.6rem;color:#166534} 
 
+        /* FAQ section */
+        .faq-grid{display:grid;gap:1rem;margin-top:1rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+        @media(min-width:900px){.faq-grid{grid-template-columns:repeat(2,1fr)}}
+        .faq-item{background:var(--surface);padding:1rem;border-radius:12px;border:1px solid rgba(16,24,40,0.04);box-shadow:0 10px 30px rgba(11,20,30,0.03)}
+        .faq-item summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:.5rem .6rem;border-radius:8px;background:transparent;font-weight:700}
+        .faq-item summary::-webkit-details-marker{display:none}
+        .faq-item[open] summary{background:rgba(11,37,64,0.04)}
+        .faq-item p{margin:0;padding:.6rem .2rem;color:#102031}
+        .faq-toggle-icon{width:18px;height:18px;display:inline-block;transform:rotate(0);transition:transform .18s ease}
+        .faq-item[open] .faq-toggle-icon{transform:rotate(45deg)}
+
         /* Simple reveal */
         .reveal{opacity:0;transform:translateY(18px);animation:reveal .6s ease forwards}
         .reveal-delay{animation-delay:.12s}
@@ -498,6 +509,46 @@
             <p style="margin-top:1rem;color:var(--muted);font-size:.9rem">Prima lezione di prova: 30 minuti gratuita per definire il percorso (soggetta a disponibilità).</p>
         </section>
 
+        <section id="faq" aria-labelledby="faq-title">
+            <div class="section-title"><h2 id="faq-title">Domande frequenti</h2></div>
+            <div class="faq-grid">
+                <details class="faq-item">
+                    <summary>Quanto costa una lezione e come funziona la tariffa?</summary>
+                    <p>La tariffa oraria è CHF 60 per le lezioni singole. Offro inoltre pacchetti scontati (5h e 10h) con risparmi progressivi. Per richieste specifiche o pacchetti personalizzati contattami per un preventivo su misura.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Offri lezioni online, in presenza o entrambe?</summary>
+                    <p>Entrambe. Posso svolgere lezioni in presenza (zona su richiesta) oppure online via Zoom/Meet. Nella consulenza iniziale definiamo il formato più adatto al tuo obiettivo.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>È possibile avere una lezione di prova?</summary>
+                    <p>Sì: offro una prima mini-lezione di prova di 30 minuti (soggetta a disponibilità) per valutare il livello e definire il piano di lavoro.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Cosa include il materiale didattico?</summary>
+                    <p>Ogni corso include file di esercitazione, esempi pratici e una raccolta di risorse utili. Per corsi avanzati preparo anche esercitazioni personalizzate e report di avanzamento.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Quali sono le opzioni di pagamento e cancellazione?</summary>
+                    <p>Accetto bonifico e pagamenti digitali; per pacchetti richiedo il pagamento anticipato o condizionato a una prima lezione. Cancellazioni devono essere comunicate con almeno 24 ore di anticipo; in caso contrario la lezione potrebbe essere addebitata.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Posso richiedere un corso su misura per la scuola o l'azienda?</summary>
+                    <p>Sì. Offro percorsi strutturati per classi scolastiche, piccoli gruppi o team aziendali. Contattami con gli obiettivi e creerò un piano ad hoc con preventivo.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Come prenoto e quale è la disponibilità?</summary>
+                    <p>Prenota via email o telefono; nelle informazioni di contatto trovi orari e riferimenti. La disponibilità varia, ma cerco di offrire slot flessibili anche in orari serali per studenti e lavoratori.</p>
+                </details>
+            </div>
+        </section>
+
         <section id="contact" aria-labelledby="contact-title">
             <div class="section-title"><h2 id="contact-title">Contatti</h2></div>
             <div class="grid contact-grid">
@@ -624,6 +675,26 @@
             const s = d.querySelector('summary'); if(s) s.setAttribute('aria-expanded','true');
           } else {
             const s = d.querySelector('summary'); if(s) s.setAttribute('aria-expanded','false');
+          }
+        });
+      });
+
+      // FAQ details: only one open at a time and update summary aria-expanded (similar behavior to pricing)
+      const faqDetails = document.querySelectorAll('.faq-grid details');
+      faqDetails.forEach(f=>{
+        const summary = f.querySelector('summary');
+        if(summary){
+          summary.addEventListener('click', function(){
+            const expanded = f.open;
+            summary.setAttribute('aria-expanded', String(!expanded));
+          });
+        }
+        f.addEventListener('toggle', function(){
+          if(f.open){
+            faqDetails.forEach(other=>{ if(other!==f) { other.open=false; const s=other.querySelector('summary'); if(s) s.setAttribute('aria-expanded','false'); }});
+            const s = f.querySelector('summary'); if(s) s.setAttribute('aria-expanded','true');
+          } else {
+            const s = f.querySelector('summary'); if(s) s.setAttribute('aria-expanded','false');
           }
         });
       });
