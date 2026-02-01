@@ -201,15 +201,27 @@
         a:focus{outline:3px solid rgba(18,62,102,0.12);outline-offset:3px;border-radius:8px}
 
         /* Contact section */
-        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem;align-items:start}
         @media(max-width:780px){.contact-grid{grid-template-columns:1fr}}
+        .contact-info{padding:1.25rem;background:linear-gradient(180deg,rgba(11,37,64,0.02),rgba(11,37,64,0.01));border-radius:12px;border:1px solid rgba(16,24,40,0.04)}
+        .contact-info h3{margin:0 0 .4rem;font-size:1.2rem}
         .contact-info p{margin:0 0 .6rem}
+        .contact-info .contact-line{display:flex;gap:.6rem;align-items:center}
+        .contact-info .contact-line .icon{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:.5rem;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px}
+        .contact-form{padding:1.25rem;border-radius:12px;background:var(--surface);border:1px solid rgba(16,24,40,0.04);box-shadow:0 12px 40px rgba(11,20,30,0.04);display:flex;flex-direction:column}
+        .contact-form h3{margin:0 0 .4rem}
         .contact-form label{display:block;font-weight:700;margin-top:.6rem;margin-bottom:.25rem}
-        .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:.6rem;border-radius:8px;border:1px solid rgba(16,24,40,0.06);box-shadow:inset 0 2px 6px rgba(11,20,30,0.02);font-size:var(--para-fz)}
-        .contact-form textarea{min-height:120px;resize:vertical}
-        .contact-form .cta{align-self:flex-start}
-        #contactStatus{color:var(--primary);font-weight:700}
-        .contact-form :invalid{outline:2px solid rgba(242,20,5,0.06)}
+        .contact-form input,.contact-form textarea,.contact-form select{width:100%;padding:.75rem;border-radius:10px;border:1px solid rgba(16,24,40,0.06);box-shadow:inset 0 2px 6px rgba(11,20,30,0.02);font-size:var(--para-fz);transition:box-shadow .15s ease,transform .12s ease}
+        .contact-form input:focus,.contact-form textarea:focus,.contact-form select:focus{outline:none;box-shadow:0 6px 24px rgba(11,20,30,0.06);transform:translateY(-2px);border-color:rgba(11,37,64,0.09)}
+        .contact-form textarea{min-height:140px;resize:vertical}
+        .contact-form .cta{align-self:flex-start;padding:.72rem 1.05rem;border-radius:10px;background:var(--primary);color:#fff;border:0}
+        .contact-form .cta:hover{background:#072036;transform:translateY(-2px);box-shadow:0 14px 30px rgba(11,20,30,0.08)}
+        .contact-form .secondary{background:transparent;border:1px solid rgba(16,24,40,0.06)}
+        .contact-form .field-error{color:#b44;font-size:.92rem;margin-top:.3rem;display:none}
+        .contact-form .field-error.active{display:block}
+        #contactStatus{color:var(--primary);font-weight:700;margin-top:.6rem;display:flex;align-items:center;gap:.6rem}
+        #contactStatus .dot{width:10px;height:10px;border-radius:999px;background:var(--secondary);display:inline-block}
+        .contact-success{background:linear-gradient(90deg,#e6f9f1, #f0fff8);border:1px solid rgba(34,197,94,0.06);padding:.8rem;border-radius:10px;margin-top:.6rem;color:#166534} 
 
         /* Simple reveal */
         .reveal{opacity:0;transform:translateY(18px);animation:reveal .6s ease forwards}
@@ -490,9 +502,13 @@
             <div class="section-title"><h2 id="contact-title">Contatti</h2></div>
             <div class="grid contact-grid">
                 <div class="card contact-info">
-                    <p class="lead">Per informazioni, proposte di collaborazione o lezioni:</p>
-                    <p><strong>Email:</strong> <a href="mailto:mattia@example.com">mattia@example.com</a></p>
-                    <p><strong>Telefono:</strong> <a href="tel:+41791234567">+41 79 123 4567</a> <span class="muted">(WhatsApp)</span></p>
+                    <h3>Parliamone</h3>
+                    <p class="lead">Per informazioni su corsi, lezioni private o collaborazioni, scrivimi o prenota una consulenza.</p>
+
+                    <div class="contact-line"><span class="icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><polyline points="7 10 12 15 17 10" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>Email</strong><div><a href="mailto:mattia@example.com">mattia@example.com</a></div></div></div>
+
+                    <div class="contact-line"><span class="icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 6.18 2 2 0 0 1 5 4h3a2 2 0 0 1 2 1.72c.12 1.21.45 2.38.98 3.45a2 2 0 0 1-.45 2.11L9.91 12.09a13.46 13.46 0 0 0 3.92 3.92l1.64-1.64a2 2 0 0 1 2.11-.45c1.08.53 2.24.86 3.45.98A2 2 0 0 1 22 16.92z" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>Telefono</strong><div><a href="tel:+41791234567">+41 79 123 4567</a> <span class="muted">(WhatsApp)</span></div></div></div>
+
                     <p><strong>Orari:</strong> Lun–Ven 9:00–18:00</p>
                     <p><a class="icon-btn" href="Mattia_Martinoni_CV.pdf" download aria-label="Scarica CV">Scarica CV</a></p>
                     <div class="socials" style="margin-top:.6rem">
@@ -502,11 +518,14 @@
                 </div>
 
                 <form class="card contact-form" id="contactForm" aria-labelledby="contact-title" novalidate>
+                    <h3>Scrivimi</h3>
                     <label for="c_name">Nome</label>
                     <input id="c_name" name="name" type="text" required placeholder="Es. Maria Rossi">
+                    <div class="field-error" id="err_name">Inserisci il tuo nome</div>
 
                     <label for="c_email">Email</label>
                     <input id="c_email" name="email" type="email" required placeholder="tua@email.com">
+                    <div class="field-error" id="err_email">Inserisci una email valida</div>
 
                     <label for="c_subject">Oggetto</label>
                     <select id="c_subject" name="subject" required>
@@ -516,9 +535,16 @@
                         <option>Collaborazione</option>
                         <option>Altro</option>
                     </select>
+                    <div class="field-error" id="err_subject">Seleziona un oggetto</div>
 
                     <label for="c_message">Messaggio</label>
                     <textarea id="c_message" name="message" rows="5" required placeholder="Scrivi qui..."></textarea>
+                    <div class="field-error" id="err_message">Scrivi un messaggio</div>
+
+                    <!-- Honeypot anti-spam -->
+                    <label style="display:none">Non compilare
+                      <input name="_hp" type="text" autocomplete="off" style="display:none">
+                    </label>
 
                     <div style="display:flex;gap:.6rem;align-items:center;margin-top:.45rem">
                         <input id="c_consent" type="checkbox" required>
@@ -602,30 +628,91 @@
         });
       });
 
-      // Contact form handler (client-side MAILTO fallback)
+      // Contact form handler: enhanced validation and polished success state
       const contactForm = document.getElementById('contactForm');
       const contactStatus = document.getElementById('contactStatus');
       if(contactForm){
+        // show/clear per-field errors on input
+        ['name','email','subject','message'].forEach(id => {
+          const el = contactForm.querySelector(`[name="${id}"]`);
+          if(el){ el.addEventListener('input', ()=>{
+            const err = document.getElementById('err_' + id);
+            if(err) err.classList.remove('active');
+          })}
+        });
+
         contactForm.addEventListener('submit', function(e){
           e.preventDefault();
-          const name = contactForm.name.value.trim();
-          const email = contactForm.email.value.trim();
-          const subject = contactForm.subject.value.trim() || 'Richiesta dal sito';
-          const message = contactForm.message.value.trim();
-          const consent = document.getElementById('c_consent');
-          if(!name || !email || !message || !consent || !consent.checked){
-            contactStatus.style.color = '#b44';
-            contactStatus.textContent = 'Per favore compila tutti i campi e accetta il consenso.';
-            contactStatus.focus && contactStatus.focus();
+          // Honeypot check
+          if(contactForm.querySelector('[name="_hp"]').value){
+            // silently drop spam
             return;
           }
-          contactStatus.style.color = '';
-          contactStatus.textContent = 'Apro il client di posta predefinito…';
+
+          // Basic required checks
+          let valid = true;
+          const name = contactForm.name.value.trim();
+          const email = contactForm.email.value.trim();
+          const subject = contactForm.subject.value.trim();
+          const message = contactForm.message.value.trim();
+          const consent = document.getElementById('c_consent');
+
+          if(!name){ document.getElementById('err_name').classList.add('active'); valid = false; }
+          if(!email || !/.+@.+\..+/.test(email)){ document.getElementById('err_email').classList.add('active'); valid = false; }
+          if(!subject){ document.getElementById('err_subject').classList.add('active'); valid = false; }
+          if(!message){ document.getElementById('err_message').classList.add('active'); valid = false; }
+          if(!consent || !consent.checked){ contactStatus.style.color = '#b44'; contactStatus.textContent = 'Accetta il consenso per procedere.'; valid = false; }
+
+          if(!valid){
+            // focus first invalid
+            const firstErr = contactForm.querySelector('.field-error.active');
+            if(firstErr){
+              const idx = firstErr.id.replace('err_','');
+              const focusEl = contactForm.querySelector(`[name="${idx}"]`);
+              focusEl && focusEl.focus();
+            }
+            return;
+          }
+
+          // Build mailto preview but show polished confirmation before opening client
+          contactStatus.innerHTML = '<span class="contact-success">Messaggio pronto. Clicca <button id="openMail" class="cta" type="button">Apri il tuo client email</button> per inviare o scegli di copiare il testo.</span>';
           const mailtoSubject = encodeURIComponent(`[Sito] ${subject} — ${name}`);
           const body = `Nome: ${name}\nEmail: ${email}\n\n${message}`;
           const mailtoBody = encodeURIComponent(body);
-          // Small timeout to show message before redirecting
-          setTimeout(function(){ window.location.href = `mailto:mattia@example.com?subject=${mailtoSubject}&body=${mailtoBody}`; }, 400);
+
+          // disable form inputs visually
+          Array.from(contactForm.elements).forEach(el => el.disabled = true);
+
+          // add open-mail handler
+          document.getElementById('openMail').addEventListener('click', function(){
+            window.location.href = `mailto:mattia@example.com?subject=${mailtoSubject}&body=${mailtoBody}`;
+          });
+
+          // also allow copy-to-clipboard of message
+          const copyBtn = document.createElement('button');
+          copyBtn.className = 'secondary'; copyBtn.type = 'button'; copyBtn.textContent = 'Copia testo';
+          copyBtn.style.marginLeft = '.6rem';
+          copyBtn.addEventListener('click', function(){
+            navigator.clipboard && navigator.clipboard.writeText(body).then(()=>{
+              contactStatus.textContent = 'Testo copiato negli appunti.';
+            });
+          });
+          document.getElementById('openMail').insertAdjacentElement('afterend', copyBtn);
+
+          // show a reset option
+          const resetBtn = document.createElement('button');
+          resetBtn.className = 'secondary'; resetBtn.type = 'button'; resetBtn.textContent = 'Nuovo messaggio';
+          resetBtn.style.marginLeft = '.6rem';
+          resetBtn.addEventListener('click', function(){
+            contactForm.reset(); contactStatus.textContent = ''; Array.from(contactForm.elements).forEach(el=>el.disabled=false);
+            document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active'));
+          });
+          document.getElementById('openMail').insertAdjacentElement('afterend', resetBtn);
+        });
+
+        // Reset clears status
+        contactForm.addEventListener('reset', function(){
+          setTimeout(()=>{ contactStatus.textContent = ''; document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active')) }, 20);
         });
       }
     })();
