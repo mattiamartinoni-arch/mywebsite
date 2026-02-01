@@ -213,13 +213,25 @@
         .contact-form{padding:1.25rem;border-radius:14px;background:var(--surface);border:1px solid rgba(16,24,40,0.04);box-shadow:0 18px 44px rgba(11,20,30,0.06);display:flex;flex-direction:column;gap:.4rem}
         .contact-form h3{margin:0 0 .6rem}
         .form-row{position:relative;margin-top:.6rem}
+        .form-row{position:relative;z-index:1}
         .form-row input,.form-row textarea,.form-row select{width:100%;padding:.85rem .9rem .85rem 48px;border-radius:10px;border:1px solid rgba(16,24,40,0.06);background:transparent;transition:box-shadow .14s ease,transform .12s ease}
         .form-row textarea{min-height:140px;resize:vertical;padding:14px .9rem .9rem 48px}
         .input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center}
         .form-row label{position:absolute;left:48px;top:50%;transform:translateY(-50%);transition:transform .16s ease,font-size .14s ease,color .14s ease;pointer-events:none;color:var(--muted);background:transparent;padding:.1rem .2rem}
         .form-row input:focus + label,.form-row textarea:focus + label,.form-row select:focus + label,
         .form-row.has-value label{transform:translateY(-150%) scale(.9);font-size:.85rem;color:var(--primary)}
-        .form-row input:focus,.form-row textarea:focus,.form-row select:focus{outline:none;box-shadow:0 10px 30px rgba(11,20,30,0.06);transform:translateY(-2px);border-color:rgba(11,37,64,0.09)}
+
+        /* Only apply the visual lift to text fields to avoid dropdown clipping issues */
+        .form-row input:focus,.form-row textarea:focus{outline:none;box-shadow:0 10px 30px rgba(11,20,30,0.06);transform:translateY(-2px);border-color:rgba(11,37,64,0.09)}
+        /* Keep select visually prominent without transform; increase stacking when focused */
+        .form-row select:focus{outline:none;box-shadow:0 10px 30px rgba(11,20,30,0.06);border-color:rgba(11,37,64,0.09);transform:none;position:relative;z-index:60}
+        /* Bring the whole input row forward when focused so dropdown overlays are visible */
+        .form-row:focus-within{z-index:80}
+        /* When we force-floating the subject label, keep it visually above others */
+        .form-row.forced{z-index:110}
+        .form-row.forced label{background:var(--surface);padding:0 .35rem}
+        /* Ensure forced label is fully floated */
+        .form-row.forced label{transform:translateY(-150%) scale(.9);font-size:.85rem;color:var(--primary)}
         .form-row .field-error{position:relative;margin-top:.45rem;color:#b44;font-size:.92rem;display:none}
         .form-row .field-error.active{display:block}
         .contact-form .cta{align-self:flex-start;padding:.72rem 1.15rem;border-radius:12px;background:linear-gradient(90deg,var(--primary),var(--secondary));color:#fff;border:0;font-weight:900;box-shadow:0 12px 30px rgba(11,20,30,0.08)}
@@ -801,6 +813,44 @@
         });
 
         contactForm.addEventListener('reset', function(){ setTimeout(()=>{ contactStatus.textContent=''; document.querySelectorAll('.field-error').forEach(e=>e.classList.remove('active')); document.querySelectorAll('.form-row').forEach(r=>r.classList.remove('has-value')); }, 30); });
+
+        // Ensure subject (select) label stays floated when user focuses other fields,
+        // to avoid overlap between the floating label and the select's placeholder/dropdown.
+        const subjectRow = document.getElementById('row_subject');
+        const subjectSelect = subjectRow && subjectRow.querySelector('select[name="subject"]');
+        if(subjectRow && subjectSelect){
+          // When any field inside the form receives focus: force the subject label to float
+          document.addEventListener('focusin', function(e){
+            if(!contactForm.contains(e.target)) return;
+            if(e.target.name !== 'subject' && subjectSelect.value === ''){
+              subjectRow.classList.add('has-value','forced');
+            }
+          });
+
+          // Also add focus listeners on each text field to ensure immediate forcing on click
+          ['name','email','message'].forEach(n=>{
+            const el = contactForm.querySelector(`[name="${n}"]`);
+            if(el){
+              el.addEventListener('focus', ()=>{ if(subjectSelect.value==='') subjectRow.classList.add('has-value','forced'); });
+              el.addEventListener('blur', ()=>{ setTimeout(()=>{ if(document.activeElement !== subjectSelect && subjectSelect.value==='' ) subjectRow.classList.remove('has-value','forced'); }, 8); });
+            }
+          });
+
+          // When focus leaves the form entirely, remove forced state if select empty
+          document.addEventListener('focusout', function(){
+            setTimeout(()=>{
+              if(!contactForm.contains(document.activeElement)){
+                if(subjectSelect.value === '') subjectRow.classList.remove('has-value','forced');
+              }
+            }, 12);
+          });
+
+          // Keep has-value in sync with select value changes
+          subjectSelect.addEventListener('change', function(){
+            if(this.value) subjectRow.classList.add('has-value'); else subjectRow.classList.remove('has-value');
+            subjectRow.classList.remove('forced');
+          });
+        }
       }
     })();
     </script>
